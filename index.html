@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Coupons - Main</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
+
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.css" />
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.3.1/jquery.mobile-1.3.1.min.js"></script>
+
+    <script type="text/javascript">
+        var array,locationArray=[0,0,0,0];
+        xhr =new XMLHttpRequest();
+        var str,i,j=0;
+
+        xhr.abort();
+        xhr.open(
+            "GET",
+            "coupon.json", true);
+        xhr.onreadystatechange = function()
+        {
+            if (xhr.readyState == 4 && xhr.status == 200)
+            {
+                var ob = xhr.responseText;
+                array = JSON.parse(ob);
+
+                for (i = 0; i < array.coupons.length; i++) {
+                    $('<li><a href=#' + array.coupons[i].id + '>' + array.coupons[i].name + '</a></li>').appendTo('.list-coupons');
+                    $('<div data-role="page" id=' + array.coupons[i].id + '><div data-role="header" data-add-back-btn="true"><h1>' + array.coupons[i].name + '</h1></div><div data-role="content"><img src=' + array.coupons[i].thumb + '><div class="location">' + array.coupons[i].location + '</div><p class="description">' + array.coupons[i].description + '</p><p class="price">Pay just ₪ ' + array.coupons[i].price + ' insted of ₪ ' + array.coupons[i]["original-price"] + '!</p></div></div>').appendTo('body');
+                }
+                $('#listCopuns').listview('refresh');
+                for (i=0;i<array.coupons.length;i++){
+                    locationArray[j] = array.coupons[i].coordX;
+                    j++;
+                    locationArray[j] = array.coupons[i].coordY;
+                    j++;
+                }
+            }
+            };
+        xhr.send(null);
+    </script>
+
+    <script>
+function myFunc() {
+    if(window.navigator.geolocation)
+    {
+        window.navigator.geolocation.getCurrentPosition(getClosestCoupons,errfunc);
+    }
+    else
+    {
+        alert("geolocation is not supported");
+    }
+}
+        function getClosestCoupons(ob) {
+            var distanceArray=[0,0,0,0];
+            var min=0;
+            var minIndex=0;
+            var latitude = ob.coords.latitude;
+            var longitude = ob.coords.longitude;
+            var indexs = [-2,-2,-2,-2,-2];
+            var counter = 0, x = 0, y = 0, distance = 0, j = 0;
+            for (var i = 0; i < locationArray.length; i = i + 2) {
+                x = latitude - locationArray[i];
+                y = longitude - locationArray[i + 1];
+                x = Math.pow(x, 2);
+                y = Math.pow(y, 2);
+                distance = Math.sqrt(x + y);
+                distanceArray[j] = distance;
+                j++;
+            }
+            for(i=0;i<5;i++){
+            min = Math.min.apply(null,distanceArray);
+            minIndex = distanceArray.indexOf(min);
+            distanceArray[minIndex] = Number.MAX_VALUE;
+                $('<li><a href=#'+ array.coupons[minIndex].id + '>' + array.coupons[minIndex].name + '</a></li>').appendTo('.close');
+                $('<div data-role="page"  id=' + array.coupons[minIndex].id + '><div data-role="header" data-add-back-btn="true"><h1>' + array.coupons[minIndex].name + '</h1></div><div data-role="content"><img src=' + array.coupons[minIndex].thumb + '><div class="location">' + array.coupons[minIndex].location + '</div><p class="description">' + array.coupons[minIndex].description + '</p><p class="price">Pay just ₪ ' + array.coupons[minIndex].price + ' insted of ₪ ' + array.coupons[minIndex]["original-price"] + '!</p></div></div>').appendTo('body');
+            }
+            $('#closest').listview('refresh');
+        }
+
+            function errfunc()
+            {
+                alert("geolocation is not supported");
+            }
+    </script>
+
+</head>
+<body>
+
+<div data-role="page" id="home">
+
+    <div data-role="header">
+        <h1>Coupons Platform</h1>
+    </div>
+
+    <div data-role="content"  >
+        <ul class="list-coupons" data-role="listview" id="listCopuns"></ul><br><br>
+        <button id="closetCoupons" onclick="myFunc()">Get your 5 closet coupons</button>
+    </div>
+    <div data-role="footer">
+        <ul class="close" data-theme="b" data-role="listview" id="closest" ></ul>
+    </div>
+</div>
+
+</body>
+
+</html>

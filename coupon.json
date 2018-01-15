@@ -1,0 +1,8 @@
+{"coupons":[
+  {"id":"coffee", "name":"Quality Ground Coffee at Aroma Espresso Bar", "description":"The finest coffee at the finest price.", "location":"Tel-Aviv", "coordX":32.0710612 ,"coordY":34.7816868 ,"price":9, "original-price":16,"thumb":"img/coffee.jpg"},
+  {"id":"computers", "name":"Powerful Laptop PC at KSP Computers & Cellular", "description":"High performance, low price.", "location":"Hadera", "coordX":32.4372658, "coordY":34.9210444 ,"price":2300, "original-price":2800,"thumb":"img/laptop.jpg"},
+  {"id":"spa", "name":"Soothing Therapy Massage at Spa Golf", "description":"Relaxing all body massage.", "location":"Caesarea","coordX":32.501185, "coordY":34.8924182 ,"price":220, "original-price":300,"thumb":"img/spa.jpg"},
+  {"id":"accessories", "name":"Cool Headphones at Bug Multisystem", "description":"Amazing sound at an amazing pricing", "location":"Zichron Ya'akov", "coordX":32.5692625, "coordY":34.9333911 ,"price":95, "original-price":140,"thumb":"img/headphones.jpeg"},
+  {"id":"supermarket", "name":"Usher-Ad", "description":"Amazing deals at the supermarket", "location":"Holon", "coordX":32.0596259, "coordY":34.7697866 ,"price":350, "original-price":1340,"thumb":"img/UsherAd.jpg"},
+  {"id":"oven", "name":"Sauter", "description":"A brand new design", "location":"Rishon-Lezion", "coordX":31.9848989, "coordY":34.769306 ,"price":1900, "original-price":2500,"thumb":"img/sauter.gif"}
+]}
